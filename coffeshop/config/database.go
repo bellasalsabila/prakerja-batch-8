@@ -1,9 +1,11 @@
 package config
 
 import (
+	"coffeshop/model"
 	"fmt"
 	"os"
 
+	_ "github.com/go-sql-driver/mysql" // Import driver MySQL
 	"github.com/jinzhu/gorm"
 	"github.com/joho/godotenv"
 )
@@ -32,9 +34,14 @@ func InitDatabase() {
 	}
 
 	// Migrate database models here
-	// DB.AutoMigrate(&YourModel{})
+	initMigration()
 }
 
 func CloseDatabase() {
 	DB.Close()
+}
+
+func initMigration() {
+
+	DB.AutoMigrate(&model.Data{}, &model.User{})
 }
